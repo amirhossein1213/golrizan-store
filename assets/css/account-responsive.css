@@ -1,0 +1,636 @@
+/* Dedicated customer-account layout v2.7.2 — loaded after every shared stylesheet. */
+body[data-page="account"] main,
+body[data-page="account"] .container,
+body[data-page="account"] .account-dashboard,
+body[data-page="account"] .customer-sidebar,
+body[data-page="account"] .customer-content,
+body[data-page="account"] .customer-panel,
+body[data-page="account"] .checkout-card,
+body[data-page="account"] .table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body[data-page="account"] .field input:not([type="checkbox"]):not([type="radio"]),
+body[data-page="account"] .field select,
+body[data-page="account"] .field textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+body[data-page="account"] .field input[type="checkbox"],
+body[data-page="account"] .field input[type="radio"] {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+body[data-page="account"] .checkboxes label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  line-height: 1.9;
+}
+
+body[data-page="account"] .customer-panel,
+body[data-page="account"] .customer-welcome {
+  scroll-margin-top: 145px;
+}
+
+body[data-page="account"] .public-page-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+body[data-page="account"] .public-page-title > div:first-child,
+body[data-page="account"] .public-page-title h1,
+body[data-page="account"] .public-page-title p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+body[data-page="account"] .public-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body[data-page="account"] .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body[data-page="account"] .table-wrap > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+@media (max-width: 980px) {
+  body[data-page="account"] .customer-area {
+    padding: 14px 0 42px;
+  }
+
+  body[data-page="account"] .account-dashboard {
+    display: block !important;
+    width: min(var(--container), calc(100% - 20px));
+  }
+
+  body[data-page="account"] .customer-sidebar {
+    position: static !important;
+    top: auto !important;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0 0 14px;
+    padding: 12px;
+    border-radius: 19px;
+  }
+
+  body[data-page="account"] .customer-profile-card {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    padding: 3px;
+    border: 0;
+  }
+
+  body[data-page="account"] .customer-profile-card img,
+  body[data-page="account"] .customer-avatar {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+
+  body[data-page="account"] .customer-profile-card > div {
+    min-width: 0;
+  }
+
+  body[data-page="account"] .customer-profile-card strong,
+  body[data-page="account"] .customer-profile-card small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body[data-page="account"] .customer-sidebar > form {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  body[data-page="account"] .customer-logout {
+    width: auto;
+    min-height: 42px;
+    padding: 8px 13px;
+    white-space: nowrap;
+  }
+
+  body[data-page="account"] .customer-sidebar__help {
+    display: none !important;
+  }
+
+  body[data-page="account"] .customer-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex !important;
+    gap: 7px;
+    width: 100%;
+    margin: 0;
+    padding: 7px 1px 3px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    scrollbar-width: none;
+  }
+
+  body[data-page="account"] .customer-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-page="account"] .customer-nav a {
+    flex: 0 0 auto;
+    min-width: max-content;
+    min-height: 42px;
+    justify-content: center;
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    scroll-snap-align: start;
+    white-space: nowrap;
+  }
+
+  body[data-page="account"] .customer-nav a > span {
+    display: none;
+  }
+
+  body[data-page="account"] .customer-nav a.active {
+    border-color: #d5a55d;
+    background: #fff3df;
+    color: var(--brand);
+  }
+
+  body[data-page="account"] .customer-nav a b {
+    margin-right: 4px;
+  }
+
+  body[data-page="account"] .customer-content {
+    display: grid;
+    gap: 13px;
+    width: 100%;
+  }
+
+  body[data-page="account"] .customer-welcome {
+    display: flex !important;
+    min-height: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    padding: 22px 20px;
+    border-radius: 20px;
+  }
+
+  body[data-page="account"] .customer-welcome h1 {
+    font-size: clamp(20px, 4.8vw, 25px);
+  }
+
+  body[data-page="account"] .customer-welcome p {
+    font-size: 10px;
+    line-height: 2;
+  }
+
+  body[data-page="account"] .customer-welcome .btn {
+    width: 100%;
+    margin: 0;
+  }
+
+  body[data-page="account"] .customer-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    width: 100%;
+  }
+
+  body[data-page="account"] .customer-stats article {
+    display: flex !important;
+    min-width: 0;
+    padding: 12px 10px;
+    gap: 8px;
+    border-radius: 15px;
+  }
+
+  body[data-page="account"] .customer-stat__icon {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  body[data-page="account"] .customer-stats article > div {
+    min-width: 0;
+  }
+
+  body[data-page="account"] .customer-stats small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 9px;
+  }
+
+  body[data-page="account"] .customer-stats strong {
+    font-size: 17px;
+  }
+
+  body[data-page="account"] .customer-overview-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 13px;
+  }
+
+  body[data-page="account"] .customer-panel {
+    width: 100%;
+    padding: 17px;
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  body[data-page="account"] .customer-panel__head {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 14px;
+  }
+
+  body[data-page="account"] .customer-panel__head > div,
+  body[data-page="account"] .customer-panel__head h2 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-page="account"] .customer-panel__head h2 {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  body[data-page="account"] .customer-panel__summary {
+    width: 100%;
+    max-width: none;
+    text-align: right;
+  }
+
+  body[data-page="account"] .customer-quick-actions > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px;
+    width: 100%;
+    overflow: visible;
+  }
+
+  body[data-page="account"] .customer-quick-actions a {
+    min-width: 0;
+    padding: 11px 6px;
+  }
+
+  body[data-page="account"] .customer-notice {
+    align-items: flex-start;
+    min-width: 0;
+    padding: 13px;
+  }
+
+  body[data-page="account"] .customer-order {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 8px 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  body[data-page="account"] .customer-order__identity {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  body[data-page="account"] .customer-order .order-status-pill {
+    grid-column: 2;
+    justify-self: end;
+    max-width: 135px;
+    text-align: center;
+  }
+
+  body[data-page="account"] .customer-order__amount {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+    padding-top: 9px;
+    border-top: 1px dashed var(--line);
+    text-align: right !important;
+  }
+
+  body[data-page="account"] .customer-order__amount strong,
+  body[data-page="account"] .customer-order__amount small,
+  body[data-page="account"] .customer-order__identity strong {
+    overflow-wrap: anywhere;
+  }
+
+  body[data-page="account"] .customer-order__arrow {
+    display: none !important;
+  }
+
+  body[data-page="account"] .wishlist-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 9px;
+  }
+
+  body[data-page="account"] .wishlist-card {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+  }
+
+  body[data-page="account"] .wishlist-card img {
+    width: 76px;
+    height: 76px;
+  }
+
+  body[data-page="account"] .customer-panel .form-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+  }
+
+  body[data-page="account"] .customer-panel .field.full {
+    grid-column: 1 / -1 !important;
+  }
+
+  body[data-page="account"] .customer-panel form > .btn {
+    width: 100%;
+  }
+
+  body[data-page="account"] .account-detail-page .product-page,
+  body[data-page="account"] .support-page .product-page {
+    width: min(var(--container), calc(100% - 20px));
+    padding: 22px 0 48px;
+  }
+
+  body[data-page="account"] .public-page-title {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 17px;
+  }
+
+  body[data-page="account"] .public-page-title h1 {
+    font-size: 22px;
+  }
+
+  body[data-page="account"] .public-page-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  body[data-page="account"] .public-page-actions .btn:only-child {
+    grid-column: 1 / -1;
+  }
+
+  body[data-page="account"] .order-meta {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+  }
+
+  body[data-page="account"] .order-meta > div {
+    min-width: 0;
+    padding: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-page="account"] .account-detail-page .checkout-card,
+  body[data-page="account"] .support-page .checkout-card {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  body[data-page="account"] .ticket-message {
+    width: 94%;
+    max-width: 94%;
+    padding: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-page="account"] .ticket-message header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 820px) {
+  body[data-page="account"] .responsive-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 8px;
+    background: #f8f3eb;
+  }
+
+  body[data-page="account"] .responsive-table thead {
+    display: none !important;
+  }
+
+  body[data-page="account"] .responsive-table tbody,
+  body[data-page="account"] .responsive-table tr,
+  body[data-page="account"] .responsive-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  body[data-page="account"] .responsive-table tr {
+    margin: 0 0 8px;
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #fff;
+  }
+
+  body[data-page="account"] .responsive-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  body[data-page="account"] .responsive-table td {
+    display: grid;
+    grid-template-columns: minmax(94px, 35%) minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 8px 0;
+    border: 0;
+    border-bottom: 1px dashed var(--line);
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  body[data-page="account"] .responsive-table td:last-child {
+    border-bottom: 0;
+  }
+
+  body[data-page="account"] .responsive-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  body[data-page="account"] .responsive-table td[colspan] {
+    display: block;
+  }
+
+  body[data-page="account"] .responsive-table td[colspan]::before {
+    display: none;
+  }
+
+  body[data-page="account"] .responsive-table__total td:first-child {
+    display: none;
+  }
+
+  body[data-page="account"] .responsive-table__total td:last-child {
+    display: grid;
+  }
+
+  body[data-page="account"] .responsive-table__empty td {
+    display: block !important;
+    text-align: center;
+  }
+
+  body[data-page="account"] .responsive-table__empty td::before {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-page="account"] .account-dashboard,
+  body[data-page="account"] .account-detail-page .product-page,
+  body[data-page="account"] .support-page .product-page {
+    width: calc(100% - 16px);
+  }
+
+  body[data-page="account"] .customer-panel {
+    padding: 14px;
+  }
+
+  body[data-page="account"] .customer-panel .form-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px;
+  }
+
+  body[data-page="account"] .customer-panel .field,
+  body[data-page="account"] .customer-panel .field.full {
+    grid-column: 1 !important;
+  }
+
+  body[data-page="account"] .customer-quick-actions > div:last-child {
+    display: flex !important;
+    gap: 8px;
+    padding-bottom: 3px;
+    overflow-x: auto;
+    scroll-snap-type: inline proximity;
+  }
+
+  body[data-page="account"] .customer-quick-actions a {
+    flex: 0 0 116px;
+    scroll-snap-align: start;
+  }
+
+  body[data-page="account"] .customer-panel__head > .muted:not(.customer-panel__summary) {
+    width: 100%;
+  }
+
+  body[data-page="account"] .ticket-reply-form .btn,
+  body[data-page="account"] .ticket-close-form .btn,
+  body[data-page="account"] .return-request-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  body[data-page="account"] .customer-sidebar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-page="account"] .customer-sidebar > form {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  body[data-page="account"] .customer-logout {
+    width: 100%;
+  }
+
+  body[data-page="account"] .customer-nav {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  body[data-page="account"] .customer-stats article {
+    padding: 10px 8px;
+  }
+
+  body[data-page="account"] .customer-stat__icon {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  body[data-page="account"] .customer-stats strong {
+    font-size: 15px;
+  }
+
+  body[data-page="account"] .customer-order .order-status-pill {
+    max-width: 112px;
+    font-size: 9px;
+  }
+
+  body[data-page="account"] .public-page-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body[data-page="account"] .public-page-actions .btn {
+    grid-column: 1 !important;
+    width: 100%;
+  }
+
+  body[data-page="account"] .order-meta {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  body[data-page="account"] .responsive-table td {
+    grid-template-columns: minmax(82px, 39%) minmax(0, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 340px) {
+  body[data-page="account"] .customer-stats {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}

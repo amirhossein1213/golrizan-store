@@ -1,0 +1,36 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__).'/app/bootstrap.php';admin_required();
+$adminPage='attributes';$adminTitle='ویژگی‌های محصولات';
+if(is_post()){
+    verify_csrf();$action=scalar_string($_POST['action']??'');
+    try{
+        $pdo=db();
+        if($action==='save_attribute'){
+            $id=max(0,scalar_int($_POST['id']??0));$name=trim(scalar_string($_POST['name']??''));$slug=slugify(trim(scalar_string($_POST['slug']??''))?:$name);$display=in_array(scalar_string($_POST['display_type']??'button'),['button','color','select'],true)?scalar_string($_POST['display_type']):'button';$sort=max(-10000,min(10000,scalar_int($_POST['sort_order']??0)));$active=isset($_POST['is_active'])?1:0;
+            if(text_length($name)<2||text_length($name)>100||!preg_match('/^[a-z0-9-]{2,120}$/',$slug))throw new RuntimeException('نام یا نشانی ویژگی معتبر نیست.');
+            if($id){$pdo->prepare('UPDATE product_attributes SET name=?,slug=?,display_type=?,sort_order=?,is_active=? WHERE id=?')->execute([$name,$slug,$display,$sort,$active,$id]);}else{$pdo->prepare('INSERT INTO product_attributes(name,slug,display_type,sort_order,is_active) VALUES(?,?,?,?,?)')->execute([$name,$slug,$display,$sort,$active]);}
+            flash('success','ویژگی ذخیره شد.');
+        }elseif($action==='save_value'){
+            $id=max(0,scalar_int($_POST['id']??0));$attributeId=max(0,scalar_int($_POST['attribute_id']??0));$value=trim(scalar_string($_POST['value']??''));$slug=slugify(trim(scalar_string($_POST['slug']??''))?:$value);$color=strtoupper(trim(scalar_string($_POST['color_hex']??'')));$sort=max(-10000,min(10000,scalar_int($_POST['sort_order']??0)));
+            if($attributeId<1||text_length($value)<1||text_length($value)>120||!preg_match('/^[a-z0-9-]{1,140}$/',$slug))throw new RuntimeException('مقدار ویژگی معتبر نیست.');
+            if($color!==''&&!preg_match('/^#[0-9A-F]{6}$/',$color))throw new RuntimeException('کد رنگ باید مانند #FFFFFF باشد.');
+            if($id){$pdo->prepare('UPDATE product_attribute_values SET attribute_id=?,value=?,slug=?,color_hex=?,sort_order=? WHERE id=?')->execute([$attributeId,$value,$slug,$color?:null,$sort,$id]);}else{$pdo->prepare('INSERT INTO product_attribute_values(attribute_id,value,slug,color_hex,sort_order) VALUES(?,?,?,?,?)')->execute([$attributeId,$value,$slug,$color?:null,$sort]);}
+            flash('success','مقدار ویژگی ذخیره شد.');
+        }elseif($action==='delete_value'){
+            $id=max(0,scalar_int($_POST['id']??0));$used=$pdo->prepare('SELECT (SELECT COUNT(*) FROM product_variant_values WHERE attribute_value_id=?)+(SELECT COUNT(*) FROM product_attribute_selections WHERE attribute_value_id=?)');$used->execute([$id,$id]);if((int)$used->fetchColumn()>0)throw new RuntimeException('این مقدار در محصول یا متغیر محصول استفاده شده و قابل حذف نیست.');$pdo->prepare('DELETE FROM product_attribute_values WHERE id=?')->execute([$id]);flash('success','مقدار حذف شد.');
+        }elseif($action==='delete_attribute'){
+            $id=max(0,scalar_int($_POST['id']??0));$used=$pdo->prepare('SELECT (SELECT COUNT(*) FROM product_variant_values pvv JOIN product_attribute_values pav ON pav.id=pvv.attribute_value_id WHERE pav.attribute_id=?)+(SELECT COUNT(*) FROM product_attribute_selections pas JOIN product_attribute_values pav2 ON pav2.id=pas.attribute_value_id WHERE pav2.attribute_id=?)');$used->execute([$id,$id]);if((int)$used->fetchColumn()>0)throw new RuntimeException('این ویژگی در محصول یا متغیر محصول استفاده شده و قابل حذف نیست.');$pdo->prepare('DELETE FROM product_attributes WHERE id=?')->execute([$id]);flash('success','ویژگی حذف شد.');
+        }
+    }catch(Throwable $e){log_error($e);flash('error',$e instanceof PDOException?'نام یا نشانی تکراری است.':$e->getMessage());}
+    redirect(app_url('admin/attributes.php'));
+}
+$attributes=all_product_attributes(false);require __DIR__.'/partials/header.php';
+?>
+<div class="admin-title"><div><h1>ویژگی‌های محصولات</h1><p class="muted">مثلاً رنگ، ظرفیت و سایز. مقدارهایی که اینجا تعریف می‌کنید، در فرم افزودن و ویرایش محصول به‌صورت تیک نمایش داده می‌شوند.</p></div></div>
+<div class="admin-grid two">
+<form method="post" class="card"><?=csrf_field()?><input type="hidden" name="action" value="save_attribute"><h2>ویژگی جدید</h2><div class="form-grid"><div class="field"><label>نام</label><input name="name" maxlength="100" placeholder="مثلاً رنگ" required></div><div class="field"><label>نشانی انگلیسی</label><input name="slug" dir="ltr" maxlength="120" placeholder="color"></div><div class="field"><label>نوع نمایش</label><select name="display_type"><option value="button">دکمه</option><option value="color">رنگ</option><option value="select">فهرست</option></select></div><div class="field"><label>ترتیب</label><input type="number" name="sort_order" value="0"></div><div class="field"><label><input type="checkbox" name="is_active" checked> فعال</label></div></div><button class="btn btn-primary">ذخیره ویژگی</button></form>
+<form method="post" class="card"><?=csrf_field()?><input type="hidden" name="action" value="save_value"><h2>مقدار جدید</h2><div class="form-grid"><div class="field"><label>ویژگی</label><select name="attribute_id" required><option value="">انتخاب کنید</option><?php foreach($attributes as $a):?><option value="<?=$a['id']?>"><?=e($a['name'])?></option><?php endforeach?></select></div><div class="field"><label>مقدار</label><input name="value" maxlength="120" placeholder="مثلاً سفید" required></div><div class="field"><label>نشانی انگلیسی</label><input name="slug" dir="ltr" maxlength="140" placeholder="white"></div><div class="field"><label>رنگ اختیاری</label><input name="color_hex" dir="ltr" maxlength="7" placeholder="#FFFFFF"></div><div class="field"><label>ترتیب</label><input type="number" name="sort_order" value="0"></div></div><button class="btn btn-primary">ذخیره مقدار</button></form>
+</div>
+<?php foreach($attributes as $a):?><div class="card" style="margin-top:18px"><div class="admin-title"><div><h2><?=e($a['name'])?></h2><small><?=e($a['slug'])?> • <?=e($a['display_type'])?> • <?=$a['is_active']?'فعال':'غیرفعال'?></small></div><form method="post" data-confirm="حذف شود؟"><?=csrf_field()?><input type="hidden" name="action" value="delete_attribute"><input type="hidden" name="id" value="<?=$a['id']?>"><button class="btn btn-danger">حذف ویژگی</button></form></div><div class="table-wrap"><table><thead><tr><th>مقدار</th><th>نشانی</th><th>رنگ</th><th>عملیات</th></tr></thead><tbody><?php foreach($a['values'] as $v):?><tr><td><?=e($v['value'])?></td><td dir="ltr"><?=e($v['slug'])?></td><td><?php if($v['color_hex']):?><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:<?=e($v['color_hex'])?>;border:1px solid #ccc"></span> <?=e($v['color_hex'])?><?php else:?>—<?php endif?></td><td><form method="post" data-confirm="حذف شود؟"><?=csrf_field()?><input type="hidden" name="action" value="delete_value"><input type="hidden" name="id" value="<?=$v['id']?>"><button class="btn btn-danger btn-sm">حذف</button></form></td></tr><?php endforeach?><?php if(!$a['values']):?><tr><td colspan="4">هنوز مقداری تعریف نشده است.</td></tr><?php endif?></tbody></table></div></div><?php endforeach?>
+<?php require __DIR__.'/partials/footer.php';

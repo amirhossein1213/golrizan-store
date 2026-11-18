@@ -1,0 +1,30 @@
+# Database & secret credentials
+config/database.php
+config/install-key.php
+
+# All archives and compressed files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Storage runtime, locks, logs and cache
+storage/*
+!storage/.htaccess
+storage/backups/*
+storage/logs/*
+storage/rate-limits/*
+storage/tmp/*
+*.lock
+*.key
+
+# Ignore all user product/blog/category uploads
+uploads/*
+uploads/**/*
+
+# Operating system and editor artifacts
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
